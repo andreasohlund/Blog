@@ -16,6 +16,8 @@ namespace NHibernateSample.PersisterService
 
         public void Handle(SaveToDatabaseUsingContainerCacheMode message)
         {
+            Console.WriteLine("Processing save request with the session managed using the StructurMap thread static cache");
+        
             //the session will automatically enlist in the TransactionScope
             // that NServiceBus wraps calls to messagehandlers in (given that the endpoint is
             // configured as "transactional")

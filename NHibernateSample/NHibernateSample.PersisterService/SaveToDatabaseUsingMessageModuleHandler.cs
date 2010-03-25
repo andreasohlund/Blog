@@ -16,6 +16,7 @@ namespace NHibernateSample.PersisterService
 
         public void Handle(SaveToDatabaseUsingMessageModule message)
         {
+            Console.WriteLine("Processing save request with session initialized in a MessageModule");
             repository.Save(new PersistentEntity { Data = message.DataToPersist }); 
   
             if(message.Throw)

@@ -16,6 +16,8 @@ namespace NHibernateSample.PersisterService
 
         public void Handle(SaveToDatabaseUsingRawSession message)
         {
+            Console.WriteLine("Processing save request with a raw session");
+        
             //the session will automatically enlist in the TransactionScope
             // that NServiceBus wraps calls to messagehandlers in (given that the endpoint
             // configured as "transactional")

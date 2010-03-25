@@ -89,6 +89,7 @@
     <Compile Include="EndpointConfig.cs" />
     <Compile Include="Entities\PersistentEntity.cs" />
     <Compile Include="NHibernateMessageModule.cs" />
+    <Compile Include="NServiceBusThreadLocalStorageLifestyle.cs" />
     <Compile Include="SaveToDatabaseUsingContainerCacheModeHandler.cs" />
     <Compile Include="SaveToDatabaseUsingMessageModuleHandler.cs" />
     <Compile Include="SaveToDatabaseUsingRawSessionHandler.cs" />

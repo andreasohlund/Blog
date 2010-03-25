@@ -1,4 +1,3 @@
-using System;
 using NHibernate;
 using NHibernate.Context;
 using NServiceBus;
@@ -17,7 +16,6 @@ namespace NHibernateSample.PersisterService
 
         public void HandleBeginMessage()
         {
-
             CurrentSessionContext.Bind(sessionFactory.OpenSession());
         }
 

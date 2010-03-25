@@ -29,15 +29,13 @@ namespace NHibernateSample.PersisterService
             Configure.Instance.Configurer.ConfigureComponent<SomeRepository>(ComponentCallModelEnum.Singlecall);
 
             //metod 3 uses the thread static cache mode of the container(structuremap in this case) to do the work for us
-            ObjectFactory.Configure(x=>
-                                        {
-                                            x.For<ISession>().CacheBy(InstanceScope.ThreadLocal)
-                                                .Use(ctx => ctx.GetInstance<ISessionFactory>().OpenSession());
-                                          
-                                        });
+            ObjectFactory.Configure(x=> 
+                x.For<ISession>()
+                .LifecycleIs(new NServiceBusThreadLocalStorageLifestyle())
+                .Use(ctx =>ctx.GetInstance<ISessionFactory>().OpenSession()));
         }
 
-        private ISessionFactory ConfigureSessionFactory()
+        private static ISessionFactory ConfigureSessionFactory()
         {
             return Fluently.Configure()
                 .Database(MsSqlConfiguration.MsSql2008.ConnectionString(c =>
