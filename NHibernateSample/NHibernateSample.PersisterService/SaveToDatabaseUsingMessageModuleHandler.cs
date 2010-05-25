@@ -1,5 +1,6 @@
 ﻿using System;
 using NHibernate;
+using NHibernate.Impl;
 using NHibernateSample.PersisterService.Entities;
 using NServiceBus;
 
@@ -40,7 +41,12 @@ namespace NHibernateSample.PersisterService
 
         public void Save(PersistentEntity entity)
         {
-            sessionFactory.GetCurrentSession().Save(entity);           
+            var session = (SessionImpl)sessionFactory.GetCurrentSession(); 
+            
+            //verify that we got a fresh session
+            if(session.Statistics.EntityCount != 0)
+                throw new ApplicationException("A resused session was found");
+            session.Save(entity);           
         }
     }
 }

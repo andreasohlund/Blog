@@ -1,14 +1,14 @@
-using System;
 using System.Reflection;
 using FluentNHibernate.Automapping;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
+using log4net.Appender;
+using log4net.Core;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;
 using NServiceBus;
 using NServiceBus.ObjectBuilder;
 using StructureMap;
-using StructureMap.Attributes;
 
 namespace NHibernateSample.PersisterService
 {
@@ -17,6 +17,7 @@ namespace NHibernateSample.PersisterService
         public void Init()
         {
             Configure.With()
+                .Log4Net<ConsoleAppender>(a=>a.Threshold = Level.Debug)
                .StructureMapBuilder()
                .XmlSerializer();
 
