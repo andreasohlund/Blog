@@ -1,0 +1,90 @@
+--- !ruby/object:Gem::Specification 
+name: fluentnhibernate
+version: !ruby/object:Gem::Version 
+  hash: 1293
+  prerelease: false
+  segments: 
+  - 1
+  - 1
+  - 0
+  - 685
+  version: 1.1.0.685
+platform: ruby
+authors: 
+- James Gregory
+- Hudson Akridge
+- Paul Batum
+autorequire: 
+bindir: bin
+cert_chain: []
+
+date: 2010-07-29 07:00:00 +02:00
+default_executable: 
+dependencies: 
+- !ruby/object:Gem::Dependency 
+  name: nhibernate
+  prerelease: false
+  requirement: &id001 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - "="
+      - !ruby/object:Gem::Version 
+        hash: 7983
+        segments: 
+        - 2
+        - 1
+        - 2
+        - 4000
+        version: 2.1.2.4000
+  type: :runtime
+  version_requirements: *id001
+description: |
+  Fluent, XML-less, compile safe, automated, convention-based mappings for NHibernate (.NET). Get your fluent on.
+
+email: fluent-nhibernate@googlegroups.com
+executables: []
+
+extensions: []
+
+extra_rdoc_files: []
+
+files: 
+- lib/FluentNHibernate.dll
+- lib/FluentNHibernate.pdb
+- lib/FluentNHibernate.XML
+has_rdoc: true
+homepage: http://fluentnhibernate.org/
+licenses: []
+
+post_install_message: 
+rdoc_options: []
+
+require_paths: 
+- lib
+required_ruby_version: !ruby/object:Gem::Requirement 
+  none: false
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      hash: 3
+      segments: 
+      - 0
+      version: "0"
+required_rubygems_version: !ruby/object:Gem::Requirement 
+  none: false
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      hash: 3
+      segments: 
+      - 0
+      version: "0"
+requirements: []
+
+rubyforge_project: fluentnhibernate
+rubygems_version: 1.3.7
+signing_key: 
+specification_version: 3
+summary: Fluent NHibernate - Fluent, XML-less mappings for NHibernate (.NET)
+test_files: []
+

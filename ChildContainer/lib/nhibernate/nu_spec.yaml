@@ -1,0 +1,163 @@
+--- !ruby/object:Gem::Specification 
+name: nhibernate
+version: !ruby/object:Gem::Version 
+  hash: 7983
+  prerelease: false
+  segments: 
+  - 2
+  - 1
+  - 2
+  - 4000
+  version: 2.1.2.4000
+platform: ruby
+authors: 
+- Fabio Maulo
+- Sergej Koscejev
+- Ayende Rahien
+- Tuna Toksoz
+- mikedoerfler
+- Dario Quintana
+- Richard Brown
+- petersm
+- srstrong
+- many others
+autorequire: 
+bindir: bin
+cert_chain: []
+
+date: 2010-07-20 00:00:00 +02:00
+default_executable: 
+dependencies: 
+- !ruby/object:Gem::Dependency 
+  name: castle.core
+  prerelease: false
+  requirement: &id001 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - "="
+      - !ruby/object:Gem::Version 
+        hash: 87
+        segments: 
+        - 1
+        - 1
+        - 0
+        - 0
+        version: 1.1.0.0
+  type: :runtime
+  version_requirements: *id001
+- !ruby/object:Gem::Dependency 
+  name: castle.dynamicproxy2
+  prerelease: false
+  requirement: &id002 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - "="
+      - !ruby/object:Gem::Version 
+        hash: 103
+        segments: 
+        - 2
+        - 1
+        - 0
+        - 0
+        version: 2.1.0.0
+  type: :runtime
+  version_requirements: *id002
+- !ruby/object:Gem::Dependency 
+  name: log4net
+  prerelease: false
+  requirement: &id003 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - "="
+      - !ruby/object:Gem::Version 
+        hash: 103
+        segments: 
+        - 1
+        - 2
+        - 10
+        - 0
+        version: 1.2.10.0
+  type: :runtime
+  version_requirements: *id003
+description: |
+  NHibernate is a mature, open source object-relational mapper for the .NET framework. It's actively developed , fully featured and used in thousands of successful projects.
+
+email: nhusers@googlegroups.com
+executables: []
+
+extensions: []
+
+extra_rdoc_files: []
+
+files: 
+- lib/Required_Bins/Antlr3.Runtime.dll
+- lib/Required_Bins/Iesi.Collections.dll
+- lib/Required_Bins/Iesi.Collections.xml
+- lib/Required_Bins/NHibernate.dll
+- lib/Required_Bins/NHibernate.Linq.dll
+- lib/Required_Bins/NHibernate.Linq.pdb
+- lib/Required_Bins/NHibernate.xml
+- lib/Required_For_LazyLoading/Castle/NHibernate.ByteCode.Castle.dll
+- lib/Required_For_LazyLoading/Castle/NHibernate.ByteCode.Castle.xml
+- lib/Required_For_LazyLoading/Choose_Only_One.txt
+- lib/Required_For_LazyLoading/LinFu/LinFu.DynamicProxy.dll
+- lib/Required_For_LazyLoading/LinFu/NHibernate.ByteCode.LinFu.dll
+- lib/Required_For_LazyLoading/LinFu/NHibernate.ByteCode.LinFu.xml
+- lib/Required_For_LazyLoading/Spring/antlr.runtime.dll
+- lib/Required_For_LazyLoading/Spring/Common.Logging.dll
+- lib/Required_For_LazyLoading/Spring/NHibernate.ByteCode.Spring.dll
+- lib/Required_For_LazyLoading/Spring/NHibernate.ByteCode.Spring.xml
+- lib/Required_For_LazyLoading/Spring/Spring.Aop.dll
+- lib/Required_For_LazyLoading/Spring/Spring.Aop.xml
+- lib/Required_For_LazyLoading/Spring/Spring.Core.dll
+- lib/Required_For_LazyLoading/Spring/Spring.Core.xml
+- docs/Configuration_Templates/FireBird.cfg.xml
+- docs/Configuration_Templates/MSSQL.cfg.xml
+- docs/Configuration_Templates/MySql.cfg.xml
+- docs/Configuration_Templates/Oracle.cfg.xml
+- docs/Configuration_Templates/PostgreSQL.cfg.xml
+- docs/Configuration_Templates/SQLite.cfg.xml
+- docs/gfdl.txt
+- docs/HowInstall.txt
+- docs/lgpl.txt
+- docs/LinFu.License.txt
+- docs/nhibernate-configuration.xsd
+- docs/nhibernate-mapping.xsd
+- docs/readme.html
+- docs/releasenotes.txt
+has_rdoc: true
+homepage: http://nhforge.org
+licenses: []
+
+post_install_message: 
+rdoc_options: []
+
+require_paths: 
+- lib
+required_ruby_version: !ruby/object:Gem::Requirement 
+  none: false
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      hash: 3
+      segments: 
+      - 0
+      version: "0"
+required_rubygems_version: !ruby/object:Gem::Requirement 
+  none: false
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      hash: 3
+      segments: 
+      - 0
+      version: "0"
+requirements: []
+
+rubyforge_project: nhibernate
+rubygems_version: 1.3.7
+signing_key: 
+specification_version: 3
+summary: NHibernate - Object-Relational Mapper (ORM) for .NET
+test_files: []
+

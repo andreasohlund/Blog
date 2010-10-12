@@ -1,0 +1,92 @@
+--- !ruby/object:Gem::Specification 
+name: castle.dynamicproxy2
+version: !ruby/object:Gem::Version 
+  hash: 103
+  prerelease: false
+  segments: 
+  - 2
+  - 1
+  - 0
+  - 0
+  version: 2.1.0.0
+platform: ruby
+authors: 
+- Jonathon Rossi
+- Krzysztof Kozmic
+autorequire: 
+bindir: bin
+cert_chain: []
+
+date: 2010-07-20 00:00:00 +02:00
+default_executable: 
+dependencies: 
+- !ruby/object:Gem::Dependency 
+  name: castle.core
+  prerelease: false
+  requirement: &id001 !ruby/object:Gem::Requirement 
+    none: false
+    requirements: 
+    - - "="
+      - !ruby/object:Gem::Version 
+        hash: 87
+        segments: 
+        - 1
+        - 1
+        - 0
+        - 0
+        version: 1.1.0.0
+  type: :runtime
+  version_requirements: *id001
+description: |
+  Castle is an open source project for .NET that aspires to simplify the development of enterprise and web applications. Offering a set of tools (working together or independently) and integration with others open source projects, Castle helps you get more done with less code and in less time.
+
+email: castle-project-devel@googlegroups.com
+executables: []
+
+extensions: []
+
+extra_rdoc_files: []
+
+files: 
+- lib/net-2.0/Castle.DynamicProxy2.dll
+- lib/net-2.0/Castle.DynamicProxy2.xml
+- lib/net-3.5/Castle.DynamicProxy2.dll
+- lib/net-3.5/Castle.DynamicProxy2.xml
+- docs/Core Changes.txt
+- docs/DynamicProxy Changes.txt
+has_rdoc: true
+homepage: http://castleproject.org
+licenses: []
+
+post_install_message: 
+rdoc_options: []
+
+require_paths: 
+- lib
+required_ruby_version: !ruby/object:Gem::Requirement 
+  none: false
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      hash: 3
+      segments: 
+      - 0
+      version: "0"
+required_rubygems_version: !ruby/object:Gem::Requirement 
+  none: false
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      hash: 3
+      segments: 
+      - 0
+      version: "0"
+requirements: []
+
+rubyforge_project: castle.dynamicproxy2
+rubygems_version: 1.3.7
+signing_key: 
+specification_version: 3
+summary: Castle Project (DynamicProxy2) - Simplify your .NET development
+test_files: []
+

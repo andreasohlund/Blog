@@ -1,0 +1,78 @@
+--- !ruby/object:Gem::Specification 
+name: log4net
+version: !ruby/object:Gem::Version 
+  hash: 103
+  prerelease: false
+  segments: 
+  - 1
+  - 2
+  - 10
+  - 0
+  version: 1.2.10.0
+platform: ruby
+authors: 
+- Curt Arnold
+- Nicko Cadell
+- Niall Daley
+- Gert Driesen
+- Ron Grabowski
+autorequire: 
+bindir: bin
+cert_chain: []
+
+date: 2010-07-17 00:00:00 +02:00
+default_executable: 
+dependencies: []
+
+description: |
+  log4net is a tool to help the programmer output log statements to a variety of output targets. log4net is a port of the excellent log4j framework to the .NET runtime. We have kept the framework similar in spirit to the original log4j while taking advantage of new features in the .NET runtime.
+
+email: log4net-user-subscribe@logging.apache.org
+executables: []
+
+extensions: []
+
+extra_rdoc_files: []
+
+files: 
+- lib/LICENSE.txt
+- lib/log4net.dll
+- lib/log4net.xml
+- lib/NOTICE.txt
+- lib/README.txt
+has_rdoc: true
+homepage: http://logging.apache.org/log4net
+licenses: []
+
+post_install_message: 
+rdoc_options: []
+
+require_paths: 
+- lib
+required_ruby_version: !ruby/object:Gem::Requirement 
+  none: false
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      hash: 3
+      segments: 
+      - 0
+      version: "0"
+required_rubygems_version: !ruby/object:Gem::Requirement 
+  none: false
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      hash: 3
+      segments: 
+      - 0
+      version: "0"
+requirements: []
+
+rubyforge_project: log4net
+rubygems_version: 1.3.7
+signing_key: 
+specification_version: 3
+summary: log4net - Logging for .NET
+test_files: []
+
