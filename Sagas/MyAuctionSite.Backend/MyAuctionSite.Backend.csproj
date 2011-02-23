@@ -65,8 +65,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Auctions\AuctionSaga.cs" />
+    <Compile Include="Auctions\AuctionSagaData.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="CommandValidationHandler.cs" />
+    <Compile Include="CommonDomainRepositoryWrapper.cs" />
     <Compile Include="EndpointConfig.cs" />
     <Compile Include="MessageHandlers\AggregateRoot.cs" />
     <Compile Include="Auctions\Auction.cs" />

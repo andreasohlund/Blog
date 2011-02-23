@@ -2,10 +2,10 @@ namespace MyAuctionSite.Events
 {
 	using System;
 
-	public interface AuctionRegistered:IDomainEvent
+	public class AuctionRegistered:IDomainEvent
 	{
-		Guid AuctionId { get; set; }
-		string Description { get; set; }
-		DateTime EndsAt { get; set; }
+		public Guid AuctionId { get; set; }
+		public string Description { get; set; }
+		public DateTime EndsAt { get; set; }
 	}
 }

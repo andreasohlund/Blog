@@ -2,12 +2,12 @@
 {
 	using System;
 
-	public interface BidPlaced:IDomainEvent
+	public class BidPlaced:IDomainEvent
 	{
-		Guid BidId { get; set; }
-		Guid BidderId { get; set; }
-		Guid AuctionId { get; set; }
-		DateTime BidPlacedAt { get; set; }
-		double Amount { get; set; }
+		public Guid BidId { get; set; }
+		public Guid BidderId { get; set; }
+		public Guid AuctionId { get; set; }
+		public DateTime BidPlacedAt { get; set; }
+		public double Amount { get; set; }
 	}
 }

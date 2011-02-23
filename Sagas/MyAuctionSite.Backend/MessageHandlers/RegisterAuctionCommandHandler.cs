@@ -17,12 +17,12 @@ namespace MyAuctionSite.Backend.MessageHandlers
 		{
 			var auction = new Auction(command.AuctionId,command.Description,command.EndsAt);
 
-			repository.Store(auction);
+			repository.Save(auction);
 		}
 	}
 
 	public interface IRepository
 	{
-		void Store<T>(T aggregateRoot) where T: AggregateRoot;
+		void Save<T>(T aggregateRoot) where T: AggregateRoot;
 	}
 }

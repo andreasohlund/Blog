@@ -17,7 +17,7 @@ namespace MyAuctionSite.Backend.MessageHandlers
 		{
 			var bid = new Bid(command.BidId, command.BidderId, command.AuctionId, command.BidPlacedAt, command.Amount);
 
-			repository.Store(bid);
+			repository.Save(bid);
 		}
 	}
 

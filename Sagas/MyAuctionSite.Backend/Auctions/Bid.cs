@@ -27,7 +27,7 @@
 		void Apply(BidPlaced @event)
 		{
 			Id = @event.BidId;
-			bidderId = @event.BidId;
+			bidderId = @event.BidderId;
 			auctionId = @event.AuctionId;
 			bidPlacedAt = @event.BidPlacedAt;
 			amount = @event.Amount;
