@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyAuctionSite.Events", "MyA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyAuctionSite.PersistentViewModel", "MyAuctionSite.PersistentViewModel\MyAuctionSite.PersistentViewModel.csproj", "{CF8C4B9C-86E0-403B-83C4-C4215A39ACD8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyAuctionSite.IntegrationTests", "MyAuctionSite.IntegrationTests\MyAuctionSite.IntegrationTests.csproj", "{DCE83B48-B274-4765-A3A3-76864DBBD656}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{CF8C4B9C-86E0-403B-83C4-C4215A39ACD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF8C4B9C-86E0-403B-83C4-C4215A39ACD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF8C4B9C-86E0-403B-83C4-C4215A39ACD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCE83B48-B274-4765-A3A3-76864DBBD656}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCE83B48-B274-4765-A3A3-76864DBBD656}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCE83B48-B274-4765-A3A3-76864DBBD656}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCE83B48-B274-4765-A3A3-76864DBBD656}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

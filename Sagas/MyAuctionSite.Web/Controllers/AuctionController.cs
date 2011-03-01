@@ -55,9 +55,11 @@ namespace MyAuctionSite.Web.Controllers
 		public ActionResult Register(FormCollection collection)
 		{
 			MyAuctionApplication.Bus.Send(new RegisterAuctionCommand
-										{
-											AuctionId = Guid.NewGuid(),
-											Description = "Todo"
+			                              	{
+			                              		AuctionId = Guid.NewGuid(),
+			                              		Description = "Todo",
+			                              		EndsAt = DateTime.Now.AddHours(1),
+												UserId = MyAuctionApplication.UserId
 										});
 
 			return RedirectToAction("Index");

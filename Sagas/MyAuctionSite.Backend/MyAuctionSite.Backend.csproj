@@ -64,6 +64,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Accounts\CloseUserAccountCommandHandler.cs" />
     <Compile Include="Auctions\AuctionSaga.cs" />
     <Compile Include="Auctions\AuctionSagaData.cs" />
     <Compile Include="Bootstrapper.cs" />
@@ -72,10 +73,12 @@
     <Compile Include="EndpointConfig.cs" />
     <Compile Include="MessageHandlers\AggregateRoot.cs" />
     <Compile Include="Auctions\Auction.cs" />
-    <Compile Include="Auctions\Bid.cs" />
+    <Compile Include="MessageHandlers\CloseAuctionCommandHandler.cs" />
+    <Compile Include="MessageHandlers\IRepository.cs" />
     <Compile Include="MessageHandlers\PlaceBidCommandHandler.cs" />
     <Compile Include="MessageHandlers\RegisterAuctionCommandHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SubscribeSagas.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

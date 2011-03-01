@@ -15,15 +15,11 @@ namespace MyAuctionSite.Backend.MessageHandlers
 
 		public void Handle(PlaceBidCommand command)
 		{
-			var bid = new Bid(command.BidId, command.BidderId, command.AuctionId, command.BidPlacedAt, command.Amount);
+			var auction = repository.Get<Auction>(command.AuctionId);
 
-			repository.Save(bid);
+			auction.PlaceBid(command.BidId,command.UserId,command.Amount,command.BidPlacedAt);
+
+			repository.Save(auction);
 		}
-	}
-
-	internal enum BidStatus
-	{
-		Valid,
-		Revoked
 	}
 }

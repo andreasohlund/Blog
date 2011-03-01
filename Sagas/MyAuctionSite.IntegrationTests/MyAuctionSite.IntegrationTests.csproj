@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{351BE48F-9534-41BD-AB3F-100989949D0B}</ProjectGuid>
+    <ProjectGuid>{DCE83B48-B274-4765-A3A3-76864DBBD656}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MyAuctionSite.Commands</RootNamespace>
-    <AssemblyName>MyAuctionSite.Commands</AssemblyName>
+    <RootNamespace>MyAuctionSite.IntegrationTests</RootNamespace>
+    <AssemblyName>MyAuctionSite.IntegrationTests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,26 +31,42 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Machine.Specifications">
+      <HintPath>..\lib\machine.specifications-bin\Machine.Specifications.dll</HintPath>
+    </Reference>
     <Reference Include="NServiceBus">
       <HintPath>..\lib\NServiceBus.dll</HintPath>
     </Reference>
+    <Reference Include="NServiceBus.Core">
+      <HintPath>..\lib\NServiceBus.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbortAuctionCommand.cs" />
-    <Compile Include="CloseAuctionCommand.cs" />
-    <Compile Include="CloseUserAccountCommand.cs" />
-    <Compile Include="NominateWinnerForAuctionCommand.cs" />
-    <Compile Include="RejectBidCommand.cs" />
-    <Compile Include="Validation\DataAnnotationsCommandValidator.cs" />
-    <Compile Include="ICommand.cs" />
-    <Compile Include="Validation\IValidateCommands.cs" />
-    <Compile Include="PlaceBidCommand.cs" />
+    <Compile Include="BusObserver.cs" />
+    <Compile Include="CommandExecutor.cs" />
+    <Compile Include="in_our_auction_site.cs" />
+    <Compile Include="When_a_bid_is_placed_on_an_closed_auction.cs" />
+    <Compile Include="When_a_user_account_is_closed.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RegisterAuctionCommand.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MyAuctionSite.Commands\MyAuctionSite.Commands.csproj">
+      <Project>{351BE48F-9534-41BD-AB3F-100989949D0B}</Project>
+      <Name>MyAuctionSite.Commands</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyAuctionSite.Events\MyAuctionSite.Events.csproj">
+      <Project>{C377B0BD-9867-46EE-A0FA-D20037C5FF6B}</Project>
+      <Name>MyAuctionSite.Events</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

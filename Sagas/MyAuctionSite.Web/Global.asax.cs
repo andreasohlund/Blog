@@ -6,6 +6,7 @@ using System.Web.Routing;
 
 namespace MyAuctionSite.Web
 {
+	using System;
 	using Commands;
 	using Commands.Validation;
 	using NServiceBus;
@@ -51,8 +52,14 @@ namespace MyAuctionSite.Web
 				.UnicastBus()
 				.CreateBus()
 				.Start();
+
+
+			//todo :)
+			UserId = Guid.NewGuid();
 		}
 
 		public static IBus Bus { get; set; }
+
+		public static Guid UserId { get; set; }
 	}
 }

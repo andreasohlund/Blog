@@ -3,7 +3,6 @@
 	using System;
 	using System.Threading;
 	using Commands;
-	using Events;
 	using log4net.Appender;
 	using log4net.Core;
 	using NServiceBus;
@@ -26,40 +25,7 @@
 
 
 
-	public class Temp : IWantToRunAtStartup
-	{
-		IBus bus;
 
-		public Temp(IBus bus)
-		{
-			this.bus = bus;
-		}
-
-		public void Run()
-		{
-			var auctionId = Guid.NewGuid();
-
-			bus.SendLocal(new RegisterAuctionCommand
-			              	{
-			              		AuctionId = auctionId,
-			              		Description = "Test auction - " + auctionId,
-			              		EndsAt = DateTime.Now.AddSeconds(15)
-							});
-
-			Thread.Sleep(10000);
-			bus.SendLocal(new PlaceBidCommand
-							{
-								AuctionId = auctionId,
-								BidId = Guid.NewGuid(),
-								Amount = 100,
-								BidPlacedAt = DateTime.Now
-							});
-		}
-
-		public void Stop()
-		{
-		}
-	}
 
 	public class Integration : IProfile
 	{
@@ -70,7 +36,7 @@
 	{
 		public void Configure(IConfigureThisEndpoint specifier)
 		{
-			NServiceBus.Configure.Instance.Log4Net<ConsoleAppender>(a =>
+			NServiceBus.Configure.Instance.Log4Net<ColoredConsoleAppender>(a =>
 				{
 					a.Threshold = Level.Warn;
 				});
@@ -83,26 +49,6 @@
 		public void ProfileActivated()
 		{
 			Configure.Instance.MsmqSubscriptionStorage().InMemorySagaPersister();
-		}
-	}
-
-	public class SubscribeSagas : IWantToRunAtStartup
-	{
-		readonly IBus _bus;
-
-		public SubscribeSagas(IBus bus)
-		{
-			_bus = bus;
-		}
-
-		public void Run()
-		{
-			_bus.Subscribe<AuctionRegistered>();
-			_bus.Subscribe<BidPlaced>();
-		}
-
-		public void Stop()
-		{
 		}
 	}
 }

@@ -5,6 +5,7 @@ namespace MyAuctionSite.Events
 	public class AuctionRegistered:IDomainEvent
 	{
 		public Guid AuctionId { get; set; }
+		public Guid UserId { get; set; }
 		public string Description { get; set; }
 		public DateTime EndsAt { get; set; }
 	}

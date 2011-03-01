@@ -14,5 +14,8 @@
 
 		[Required]
 		public DateTime EndsAt { get; set; }
+
+		[Required]
+		public Guid UserId { get; set; }
 	}
 }

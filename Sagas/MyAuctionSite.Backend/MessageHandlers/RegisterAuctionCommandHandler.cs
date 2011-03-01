@@ -6,23 +6,21 @@ namespace MyAuctionSite.Backend.MessageHandlers
 
 	public class RegisterAuctionCommandHandler:IHandleMessages<RegisterAuctionCommand>
 	{
-		readonly IRepository repository;
+		readonly IRepository _repository;
 
 		public RegisterAuctionCommandHandler(IRepository repository)
 		{
-			this.repository = repository;
+			_repository = repository;
 		}
 
 		public void Handle(RegisterAuctionCommand command)
 		{
-			var auction = new Auction(command.AuctionId,command.Description,command.EndsAt);
+			var auction = new Auction(command.AuctionId,
+				command.Description,
+				command.EndsAt,
+				command.UserId);
 
-			repository.Save(auction);
+			_repository.Save(auction);
 		}
-	}
-
-	public interface IRepository
-	{
-		void Save<T>(T aggregateRoot) where T: AggregateRoot;
 	}
 }

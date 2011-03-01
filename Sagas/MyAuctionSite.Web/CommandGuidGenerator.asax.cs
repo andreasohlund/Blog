@@ -1,6 +1,7 @@
 ﻿namespace MyAuctionSite.Web
 {
 	using System;
+	using Commands;
 	using NServiceBus;
 	using NServiceBus.MessageMutator;
 
@@ -8,7 +9,8 @@
 	{
 		public IMessage MutateOutgoing(IMessage message)
 		{
-			message.SetHeader("CommandId",Guid.NewGuid().ToString());
+			if(message is ICommand)
+				message.SetHeader("CommandId",Guid.NewGuid().ToString());
 			return message;
 		}
 	}
