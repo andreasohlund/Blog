@@ -42,7 +42,6 @@
   <ItemGroup>
     <Compile Include="AbortAuctionCommand.cs" />
     <Compile Include="CloseAuctionCommand.cs" />
-    <Compile Include="CloseUserAccountCommand.cs" />
     <Compile Include="NominateWinnerForAuctionCommand.cs" />
     <Compile Include="RejectBidCommand.cs" />
     <Compile Include="Validation\DataAnnotationsCommandValidator.cs" />

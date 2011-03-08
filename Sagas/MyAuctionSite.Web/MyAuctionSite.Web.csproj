@@ -102,9 +102,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Views\Account\Verify.aspx" />
+    <Content Include="Views\Account\SignupReceived.aspx" />
     <Content Include="Views\Auction\MyAuctions.aspx" />
     <Content Include="Views\Auction\Register.aspx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -142,6 +146,14 @@
     <ProjectReference Include="..\MyAuctionSite.Commands\MyAuctionSite.Commands.csproj">
       <Project>{351BE48F-9534-41BD-AB3F-100989949D0B}</Project>
       <Name>MyAuctionSite.Commands</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyAuctionSite.Events\MyAuctionSite.Events.csproj">
+      <Project>{C377B0BD-9867-46EE-A0FA-D20037C5FF6B}</Project>
+      <Name>MyAuctionSite.Events</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyAuctionSite.Operations.Messages\MyAuctionSite.Operations.Messages.csproj">
+      <Project>{90BD3248-E13B-4EB3-85B8-26BC798284B4}</Project>
+      <Name>MyAuctionSite.Operations.Messages</Name>
     </ProjectReference>
     <ProjectReference Include="..\MyAuctionSite.PersistentViewModel\MyAuctionSite.PersistentViewModel.csproj">
       <Project>{CF8C4B9C-86E0-403B-83C4-C4215A39ACD8}</Project>

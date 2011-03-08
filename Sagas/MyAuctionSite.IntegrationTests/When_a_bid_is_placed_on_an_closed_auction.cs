@@ -5,7 +5,7 @@
 	using Events;
 	using Machine.Specifications;
 
-	[Subject("")]
+	[Subject("Bids")]
 	public class When_a_bid_is_placed_on_an_closed_auction : in_our_auction_site
 	{
 		static Guid _auctionId = Guid.NewGuid();
@@ -44,4 +44,7 @@
 
 
 	}
+
+	
+
 }

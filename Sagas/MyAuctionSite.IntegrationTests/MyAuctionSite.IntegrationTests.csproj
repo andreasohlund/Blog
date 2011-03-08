@@ -51,8 +51,10 @@
     <Compile Include="BusObserver.cs" />
     <Compile Include="CommandExecutor.cs" />
     <Compile Include="in_our_auction_site.cs" />
+    <Compile Include="on_an_auction.cs" />
     <Compile Include="When_a_bid_is_placed_on_an_closed_auction.cs" />
-    <Compile Include="When_a_user_account_is_closed.cs" />
+    <Compile Include="When_a_bid_lower_than_the_current_top_bid_is_placed.cs" />
+    <Compile Include="When_a_bid_occur_within_the_allowed_idle_period.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

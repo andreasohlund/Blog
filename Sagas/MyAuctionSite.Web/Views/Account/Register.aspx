@@ -5,27 +5,16 @@
 </asp:Content>
 
 <asp:Content ID="registerContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h2>Create a New Account</h2>
+    <h2>New user signup</h2>
     <p>
-        Use the form below to create a new account. 
+        Use the form below to signup
     </p>
-    <p>
-        Passwords are required to be a minimum of <%: ViewData["PasswordLength"] %> characters in length.
-    </p>
-
+    
     <% using (Html.BeginForm()) { %>
-        <%: Html.ValidationSummary(true, "Account creation was unsuccessful. Please correct the errors and try again.") %>
+        <%: Html.ValidationSummary(true, "Registration was unsuccessful. Please correct the errors and try again.") %>
         <div>
             <fieldset>
-                <legend>Account Information</legend>
-                
-                <div class="editor-label">
-                    <%: Html.LabelFor(m => m.UserName) %>
-                </div>
-                <div class="editor-field">
-                    <%: Html.TextBoxFor(m => m.UserName) %>
-                    <%: Html.ValidationMessageFor(m => m.UserName) %>
-                </div>
+                <legend>Email address</legend>
                 
                 <div class="editor-label">
                     <%: Html.LabelFor(m => m.Email) %>
@@ -34,7 +23,7 @@
                     <%: Html.TextBoxFor(m => m.Email) %>
                     <%: Html.ValidationMessageFor(m => m.Email) %>
                 </div>
-                
+                <%--
                 <div class="editor-label">
                     <%: Html.LabelFor(m => m.Password) %>
                 </div>
@@ -50,7 +39,7 @@
                     <%: Html.PasswordFor(m => m.ConfirmPassword) %>
                     <%: Html.ValidationMessageFor(m => m.ConfirmPassword) %>
                 </div>
-                
+                --%>
                 <p>
                     <input type="submit" value="Register" />
                 </p>

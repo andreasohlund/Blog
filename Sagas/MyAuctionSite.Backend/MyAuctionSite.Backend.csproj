@@ -64,7 +64,6 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Accounts\CloseUserAccountCommandHandler.cs" />
     <Compile Include="Auctions\AuctionSaga.cs" />
     <Compile Include="Auctions\AuctionSagaData.cs" />
     <Compile Include="Bootstrapper.cs" />

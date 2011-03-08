@@ -17,33 +17,74 @@
 
 		public void MessageReceived(IMessage message)
 		{
-			_registrations.Where(r=>message.GetType().IsAssignableFrom(r.MessageType))
-				.ToList()
-				.ForEach(x=>x.FireAction(message));
+			var registrationsToActivate = _registrations.Where(r => message.GetType().IsAssignableFrom(r.MessageType))
+				.ToList();
+
+			foreach (var registration in registrationsToActivate)
+			{
+				registration.FireAction(message);
+				_registrations.Remove(registration);
+			}
 		}
 
-		public void RegisterFor<T>(Action<T> action) where T:IMessage
+		public void RegisterFor<T>(Action<T> action) where T : IMessage
 		{
 			_registrations.Add(new Registration<T>
-			                   	{
-			                   		MessageType = typeof (T),
-			                   		TheAction = action
-			                   	});
+								{
+									MessageType = typeof(T),
+									TheAction = action
+								});
 		}
 
-		class Registration<T>:IRegistration where T:IMessage
+		class Registration<T> : IRegistration, IEquatable<Registration<T>> where T : IMessage
 		{
-			public Type MessageType{ get; set;}
+			public Registration()
+			{
+				Id = Guid.NewGuid();
+			}
+
+			public Guid Id { private get; set; }
+			public Type MessageType { get; set; }
 			public void FireAction(IMessage msg)
 			{
 				FireAction((T)msg);
 			}
 
-			public Action<T> TheAction{ private get; set;}
+			public Action<T> TheAction { private get; set; }
 
 			private void FireAction(T message)
 			{
-				TheAction(message);	
+				TheAction(message);
+			}
+
+			public bool Equals(Registration<T> other)
+			{
+				if (ReferenceEquals(null, other)) return false;
+				if (ReferenceEquals(this, other)) return true;
+				return other.Id.Equals(Id);
+			}
+
+			public override bool Equals(object obj)
+			{
+				if (ReferenceEquals(null, obj)) return false;
+				if (ReferenceEquals(this, obj)) return true;
+				if (obj.GetType() != typeof (Registration<T>)) return false;
+				return Equals((Registration<T>) obj);
+			}
+
+			public override int GetHashCode()
+			{
+				return Id.GetHashCode();
+			}
+
+			public static bool operator ==(Registration<T> left, Registration<T> right)
+			{
+				return Equals(left, right);
+			}
+
+			public static bool operator !=(Registration<T> left, Registration<T> right)
+			{
+				return !Equals(left, right);
 			}
 		}
 	}

@@ -11,6 +11,9 @@ using MyAuctionSite.Web.Models;
 
 namespace MyAuctionSite.Web.Controllers
 {
+	using Commands;
+	using Events;
+	using Operations.Messages;
 
 	[HandleError]
 	public class AccountController : Controller
@@ -89,65 +92,55 @@ namespace MyAuctionSite.Web.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				// Attempt to register the user
-				MembershipCreateStatus createStatus = MembershipService.CreateUser(model.UserName, model.Password, model.Email);
-
-				if (createStatus == MembershipCreateStatus.Success)
-				{
-					FormsService.SignIn(model.UserName, false /* createPersistentCookie */);
-					return RedirectToAction("Index", "Home");
-				}
-				else
-				{
-					ModelState.AddModelError("", AccountValidation.ErrorCodeToString(createStatus));
-				}
+				MyAuctionApplication.Bus.Send<UserSignupRequested>(c => c.EmailAddress = model.Email);
+				return RedirectToAction("SignupReceived");
 			}
 
-			// If we got this far, something failed, redisplay form
-			ViewData["PasswordLength"] = MembershipService.MinPasswordLength;
 			return View(model);
 		}
 
-		// **************************************
-		// URL: /Account/ChangePassword
-		// **************************************
-
-		[Authorize]
-		public ActionResult ChangePassword()
+		public ActionResult SignupReceived()
 		{
-			ViewData["PasswordLength"] = MembershipService.MinPasswordLength;
 			return View();
 		}
 
-		[Authorize]
+		public ActionResult Verify(Guid id)
+		{
+			var model = new VerifyViewModel();
+
+			model.RegistrationId = id;
+
+			return View(model);
+		}
+
 		[HttpPost]
-		public ActionResult ChangePassword(ChangePasswordModel model)
+		public ActionResult Verify(VerifyViewModel model)
 		{
 			if (ModelState.IsValid)
 			{
-				if (MembershipService.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword))
+				MyAuctionApplication.Bus.Send<UserVerified>(c =>
 				{
-					return RedirectToAction("ChangePasswordSuccess");
-				}
-				else
-				{
-					ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
-				}
+					c.VerificationId = model.RegistrationId;
+					c.SelectedPassword = model.Password;
+				});
+				return RedirectToAction("LogOn");
 			}
 
-			// If we got this far, something failed, redisplay form
-			ViewData["PasswordLength"] = MembershipService.MinPasswordLength;
 			return View(model);
 		}
 
-		// **************************************
-		// URL: /Account/ChangePasswordSuccess
-		// **************************************
-
-		public ActionResult ChangePasswordSuccess()
+		public ActionResult FinalizeAccount()
 		{
 			return View();
 		}
+	}
 
+	public class VerifyViewModel
+	{
+		public Guid RegistrationId { get; set; }
+
+		public string Password { get; set; }
+
+		public string ConfirmPassword { get; set; }
 	}
 }

@@ -7,5 +7,7 @@
 		public Guid AuctionId{ get; set;}
 
 		public Guid WinningBid { get; set; }
+
+		public DateTime ClosedAt { get; set; }
 	}
 }

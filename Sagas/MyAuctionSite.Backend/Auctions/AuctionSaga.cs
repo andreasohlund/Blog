@@ -1,6 +1,6 @@
 namespace MyAuctionSite.Backend.Auctions
 {
-	using System.Linq;
+	using System;
 	using Commands;
 	using Events;
 	using NServiceBus;
@@ -8,46 +8,53 @@ namespace MyAuctionSite.Backend.Auctions
 
 	public class AuctionSaga : Saga<AuctionSagaData>,
 								ISagaStartedBy<AuctionRegistered>,
-								IHandleMessages<UserAccountClosed>,
+								IHandleMessages<BidPlaced>,
 								IHandleMessages<AuctionClosed>
 	{
-
+		static readonly TimeSpan CloseWhenIdleForAtLeast = TimeSpan.FromSeconds(30);
 
 		public void Handle(AuctionRegistered message)
 		{
 			Data.AuctionId = message.AuctionId;
-			Data.UserId = message.UserId;
-			Data.Status = AuctionStatus.Running;
 			RequestTimeout(message.EndsAt, null);
 		}
+
+		public void Handle(BidPlaced message)
+		{
+			Data.LastBidPlacedAt = message.BidPlacedAt;
+		}
+
+		public override void Timeout(object state)
+		{
+			var potentialCloseTime = DateTime.Now;
+
+			var timeSinceLastBid = potentialCloseTime - Data.LastBidPlacedAt;
+
+			if (timeSinceLastBid > CloseWhenIdleForAtLeast)
+				Bus.Send<CloseAuctionCommand>(c =>
+					{
+						c.AuctionId = Data.AuctionId;
+						c.CloseAt = potentialCloseTime;
+					});
+			else
+			{
+				this.RequestTimeout(CloseWhenIdleForAtLeast - timeSinceLastBid,null);
+			}
+		}
+
+
 
 		public void Handle(AuctionClosed message)
 		{
 			this.MarkAsComplete();
 		}
 
-		public override void Timeout(object state)
-		{
-			if (Data.Status == AuctionStatus.Running)
-				Bus.Send<CloseAuctionCommand>(c => { c.AuctionId = Data.AuctionId; });
-		}
 
 		public override void ConfigureHowToFindSaga()
 		{
 			ConfigureMapping<AuctionRegistered>(s => s.AuctionId, m => m.AuctionId);
 			ConfigureMapping<AuctionClosed>(s => s.AuctionId, m => m.AuctionId);
-			ConfigureMapping<UserAccountClosed>(s => s.UserId, m => m.UserId);
-		}
-
-
-		public void Handle(UserAccountClosed message)
-		{
-			if (Data.Status == AuctionStatus.Running)
-				Bus.Send<AbortAuctionCommand>(c =>
-					{
-						c.AuctionId = Data.AuctionId;
-						c.Reason = "User account was closed";
-					});
+			ConfigureMapping<BidPlaced>(s => s.AuctionId, m => m.AuctionId);
 		}
 	}
 }

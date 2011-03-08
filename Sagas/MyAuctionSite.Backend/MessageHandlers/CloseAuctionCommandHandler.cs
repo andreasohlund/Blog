@@ -18,7 +18,7 @@
 		{
 			var auction = repository.Get<Auction>(message.AuctionId);
 
-			auction.Close();
+			auction.Close(message.CloseAt);
 
 			repository.Save(auction);
 		}

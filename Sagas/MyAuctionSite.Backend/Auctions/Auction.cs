@@ -12,11 +12,12 @@
 		ICollection<BidInfo> _bids;
 
 
-		public Auction(){}
-		
-		public Auction(Guid auctionId, string description, DateTime endsAt, Guid userId):base()
+		public Auction() { }
+
+		public Auction(Guid auctionId, string description, DateTime endsAt, Guid userId)
+			: base()
 		{
-			this.RaiseEvent<AuctionRegistered>(e=>
+			this.RaiseEvent<AuctionRegistered>(e =>
 				{
 					e.AuctionId = auctionId;
 					e.Description = description;
@@ -25,23 +26,26 @@
 				});
 		}
 
-		public void Close()
+		public void Close(DateTime closeAt)
 		{
-			var winner = _bids.OrderByDescending(b=>b.Amount).FirstOrDefault();
+			var winner = _bids.OrderByDescending(b => b.Amount).FirstOrDefault();
 
 			_status = AuctionStatus.Closed;
 
 			this.RaiseEvent<AuctionClosed>(e =>
 			{
 				e.AuctionId = Id;
-				if(winner != null)
+				e.ClosedAt = closeAt;
+				if (winner != null)
 					e.WinningBid = winner.BidId;
 			});
 		}
 
-		public void PlaceBid(Guid bidId, Guid userId, double amount,DateTime bidPlacedAt)
+		public void PlaceBid(Guid bidId, Guid userId, double amount, DateTime bidPlacedAt)
 		{
-			this.RaiseEvent<BidPlaced>(e =>
+			var highestBidSoFar = _bids.OrderByDescending(x => amount).Select(x => x.Amount).FirstOrDefault();
+
+			RaiseEvent<BidPlaced>(e =>
 			{
 				e.BidId = bidId;
 				e.UserId = userId;
@@ -50,16 +54,23 @@
 				e.Amount = amount;
 			});
 
-			//TODO:is this the highest bid, if not reject
-		
-			if (_status != AuctionStatus.Running)
+
+
+			if (_status != AuctionStatus.Running || amount <= highestBidSoFar)
 			{
 				RaiseEvent<BidRejected>(b =>
 				{
 					b.BidId = bidId;
 				});
+				return;
 			}
-			
+
+
+			RaiseEvent<BidAccepted>(e =>
+				{
+					e.BidId = bidId;
+				});
+
 		}
 
 
@@ -107,8 +118,8 @@
 		{
 			if (ReferenceEquals(null, obj)) return false;
 			if (ReferenceEquals(this, obj)) return true;
-			if (obj.GetType() != typeof (BidInfo)) return false;
-			return Equals((BidInfo) obj);
+			if (obj.GetType() != typeof(BidInfo)) return false;
+			return Equals((BidInfo)obj);
 		}
 
 		public override int GetHashCode()

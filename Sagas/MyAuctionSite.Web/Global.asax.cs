@@ -50,6 +50,7 @@ namespace MyAuctionSite.Web
 				.MsmqTransport()
 				.IsTransactional(true)
 				.UnicastBus()
+					.DoNotAutoSubscribe()
 				.CreateBus()
 				.Start();
 

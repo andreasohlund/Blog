@@ -1,6 +1,5 @@
 ﻿namespace MyAuctionSite.Backend
 {
-	using Auctions;
 	using Events;
 	using NServiceBus;
 
@@ -17,7 +16,7 @@
 		{
 			_bus.Subscribe<AuctionRegistered>();
 			_bus.Subscribe<AuctionClosed>();
-			_bus.Subscribe<UserAccountClosed>();
+			_bus.Subscribe<BidPlaced>();
 		}
 
 		public void Stop()
