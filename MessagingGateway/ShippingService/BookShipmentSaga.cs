@@ -9,7 +9,6 @@ namespace ShippingService
         IHandleMessages<FedexResponseReceiptReceived>,
         IHandleMessages<FailedRequestingShipmentFromFedex>,
         IHandleMessages<ShippingDetailsReceivedFromFedex>
-
     {
         public void Handle(BookShipment message)
         {
@@ -18,49 +17,29 @@ namespace ShippingService
             RequestShipmentFromFedex();
         }
 
-        public void Handle(FailedRequestingShipmentFromFedex message)
+
+        public void Handle(FedexResponseReceiptReceived message)
         {
-            Data.NumRetries++;
+            Data.Receipt = message.Receipt;
 
-            if(MaxRetriesReached())
-            {
-                Bus.Send<BookShippingManuallyForOrder>(m =>{ m.OrderID = Data.OrderId;});
-
-                MarkAsComplete();
-
-                return;
-            }
-
-            RequestTimeout(TimeSpan.FromMinutes(1),null);
-        }
-
-        bool MaxRetriesReached()
-        {
-            return Data.NumRetries > 60;
+            RequestTimeout(message.PickupTime, null);
         }
 
         public override void Timeout(object state)
         {
             if (Data.Receipt != null)
             {
-                Bus.Send<FetchShipmentDetailsFromFedex>(m => { m.Receipt = Data.Receipt;});
+                Bus.Send<FetchShipmentDetailsFromFedex>(m => { m.Receipt = Data.Receipt; });
                 return;
             }
 
             RequestShipmentFromFedex();
         }
 
-        
-        public void Handle(FedexResponseReceiptReceived message)
-        {
-            Data.Receipt = message.Receipt;
-
-            RequestTimeout(message.PickupTime,null);
-        }
 
         public void Handle(ShippingDetailsReceivedFromFedex message)
         {
-            ReplyToOriginator<ShipmentBooked>(m=>
+            ReplyToOriginator<ShipmentBooked>(m =>
                 {
                     m.OrderID = Data.OrderId;
                     m.TrackingCode = message.TrackingCode;
@@ -68,6 +47,29 @@ namespace ShippingService
 
             MarkAsComplete();
         }
+
+
+        public void Handle(FailedRequestingShipmentFromFedex message)
+        {
+            Data.NumRetries++;
+
+            if (MaxRetriesReached())
+            {
+                Bus.Send<BookShippingManuallyForOrder>(m => { m.OrderID = Data.OrderId; });
+
+                MarkAsComplete();
+
+                return;
+            }
+
+            RequestTimeout(TimeSpan.FromMinutes(1), null);
+        }
+
+        bool MaxRetriesReached()
+        {
+            return Data.NumRetries > 60;
+        }
+
 
         public override void ConfigureHowToFindSaga()
         {
@@ -80,7 +82,7 @@ namespace ShippingService
 
         void RequestShipmentFromFedex()
         {
-            Bus.Send<RequestShipmentFromFedex>(m =>{ m.OrderId = Data.OrderId;});
+            Bus.Send<RequestShipmentFromFedex>(m => { m.OrderId = Data.OrderId; });
         }
 
     }
@@ -92,12 +94,12 @@ namespace ShippingService
         public string TrackingCode { get; set; }
     }
 
-    public class BookShippingManuallyForOrder:IMessage
+    public class BookShippingManuallyForOrder : IMessage
     {
         public Guid OrderID { get; set; }
     }
 
-    public class FetchShipmentDetailsFromFedex:IMessage
+    public class FetchShipmentDetailsFromFedex : IMessage
     {
         public string Receipt { get; set; }
     }
@@ -108,7 +110,7 @@ namespace ShippingService
 
         public DateTime PickupTime { get; set; }
 
-        public object OrderID { get; set; }
+        public Guid OrderID { get; set; }
     }
 
     public class FailedRequestingShipmentFromFedex : IMessage
@@ -116,7 +118,7 @@ namespace ShippingService
         public Guid OrderID { get; set; }
     }
 
-    public class RequestShipmentFromFedex:IMessage
+    public class RequestShipmentFromFedex : IMessage
     {
         public Guid OrderId { get; set; }
     }
