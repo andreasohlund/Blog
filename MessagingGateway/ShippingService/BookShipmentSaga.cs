@@ -7,17 +7,20 @@ namespace ShippingService
     public class BookShipmentSaga : Saga<BookShipmentSagaData>,
         IAmStartedByMessages<BookShipment>,
         IHandleMessages<FedexResponseReceiptReceived>,
-        IHandleMessages<FailedRequestingShipmentFromFedex>,
-        IHandleMessages<ShippingDetailsReceivedFromFedex>
+        IHandleMessages<FailedToRequestShipmentFromFedex>,
+        IHandleMessages<FedexShippingDetailsReceived>
     {
         public void Handle(BookShipment message)
         {
             Data.OrderId = message.OrderID;
 
-            RequestShipmentFromFedex();
+            Bus.Send<RequestShipmentFromFedex>(m =>
+                {
+                    m.OrderId = Data.OrderId;
+                });
         }
 
-
+   
         public void Handle(FedexResponseReceiptReceived message)
         {
             Data.Receipt = message.Receipt;
@@ -25,19 +28,33 @@ namespace ShippingService
             RequestTimeout(message.PickupTime, null);
         }
 
+        public override void ConfigureHowToFindSaga()
+        {
+            ConfigureMapping<FailedToRequestShipmentFromFedex>
+                (s => s.OrderId, m => m.OrderID);
+            ConfigureMapping<FedexResponseReceiptReceived>
+                (s => s.OrderId, m => m.OrderID);
+            ConfigureMapping<FedexShippingDetailsReceived>(s => s.Receipt, m => m.Receipt);
+        }
         public override void Timeout(object state)
         {
             if (Data.Receipt != null)
             {
-                Bus.Send<FetchShipmentDetailsFromFedex>(m => { m.Receipt = Data.Receipt; });
+                Bus.Send<FetchShipmentDetailsFromFedex>(m =>
+                    {
+                        m.Receipt = Data.Receipt;
+                    });
                 return;
             }
 
-            RequestShipmentFromFedex();
+            Bus.Send<RequestShipmentFromFedex>(m =>
+                {
+                    m.OrderId = Data.OrderId;
+                });
         }
 
 
-        public void Handle(ShippingDetailsReceivedFromFedex message)
+        public void Handle(FedexShippingDetailsReceived message)
         {
             ReplyToOriginator<ShipmentBooked>(m =>
                 {
@@ -49,13 +66,16 @@ namespace ShippingService
         }
 
 
-        public void Handle(FailedRequestingShipmentFromFedex message)
+        public void Handle(FailedToRequestShipmentFromFedex message)
         {
             Data.NumRetries++;
 
             if (MaxRetriesReached())
             {
-                Bus.Send<BookShippingManuallyForOrder>(m => { m.OrderID = Data.OrderId; });
+                Bus.Send<BookShippingManuallyForOrder>(m =>
+                    {
+                        m.OrderID = Data.OrderId;
+                    });
 
                 MarkAsComplete();
 
@@ -71,23 +91,15 @@ namespace ShippingService
         }
 
 
-        public override void ConfigureHowToFindSaga()
-        {
-            ConfigureMapping<FailedRequestingShipmentFromFedex>(s => s.OrderId, m => m.OrderID);
-            ConfigureMapping<FedexResponseReceiptReceived>(s => s.OrderId, m => m.OrderID);
-            ConfigureMapping<ShippingDetailsReceivedFromFedex>(s => s.Receipt, m => m.Receipt);
-        }
 
 
 
-        void RequestShipmentFromFedex()
-        {
-            Bus.Send<RequestShipmentFromFedex>(m => { m.OrderId = Data.OrderId; });
-        }
+
+       
 
     }
 
-    public class ShippingDetailsReceivedFromFedex : IMessage
+    public class FedexShippingDetailsReceived : IMessage
     {
         public string Receipt { get; set; }
 
@@ -113,7 +125,7 @@ namespace ShippingService
         public Guid OrderID { get; set; }
     }
 
-    public class FailedRequestingShipmentFromFedex : IMessage
+    public class FailedToRequestShipmentFromFedex : IMessage
     {
         public Guid OrderID { get; set; }
     }
