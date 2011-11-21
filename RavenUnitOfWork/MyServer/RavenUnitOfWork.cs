@@ -1,17 +1,18 @@
 namespace MyServer
 {
     using System;
+    using System.Transactions;
     using NServiceBus;
     using NServiceBus.ObjectBuilder;
     using NServiceBus.UnitOfWork;
     using Raven.Client;
     using Raven.Client.Document;
 
-    public class MyOwnUnitOfWork : IManageUnitsOfWork
+    public class RavenUnitOfWork : IManageUnitsOfWork
     {
         readonly IDocumentSession session;
 
-        public MyOwnUnitOfWork(IDocumentSession session)
+        public RavenUnitOfWork(IDocumentSession session)
         {
             this.session = session;
         }
@@ -46,7 +47,7 @@ namespace MyServer
     {
         public void Init()
         {
-            Configure.Instance.Configurer.ConfigureComponent<MyOwnUnitOfWork>(DependencyLifecycle.InstancePerUnitOfWork);
+            Configure.Instance.Configurer.ConfigureComponent<RavenUnitOfWork>(DependencyLifecycle.InstancePerUnitOfWork);
         }
     }
 }
