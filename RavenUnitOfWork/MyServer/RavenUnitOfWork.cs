@@ -1,9 +1,6 @@
 namespace MyServer
 {
     using System;
-    using System.Transactions;
-    using NServiceBus;
-    using NServiceBus.ObjectBuilder;
     using NServiceBus.UnitOfWork;
     using Raven.Client;
     using Raven.Client.Document;
@@ -41,13 +38,5 @@ namespace MyServer
             Console.WriteLine(string.Format("SId({0}) UoW - {1}", ((DocumentSession)session).Id, message));
         }
 
-    }
-
-    public class UoWIntitializer : IWantCustomInitialization
-    {
-        public void Init()
-        {
-            Configure.Instance.Configurer.ConfigureComponent<RavenUnitOfWork>(DependencyLifecycle.InstancePerUnitOfWork);
-        }
     }
 }

@@ -2,12 +2,10 @@ using NServiceBus;
 
 namespace MyServer
 {
+    using NServiceBus.UnitOfWork;
     using Raven.Client;
     using Raven.Client.Document;
     using StructureMap;
-    using StructureMap.Pipeline;
-    using log4net.Appender;
-    using log4net.Core;
 
     public class EndpointConfig : IConfigureThisEndpoint, IWantCustomInitialization
     {
@@ -39,6 +37,9 @@ namespace MyServer
 
                                             c.For<IDocumentSession>()
                                                 .Use(ctx => ctx.GetInstance<IDocumentStore>().OpenSession());
+
+                                            c.For<IManageUnitsOfWork>()
+                                                .Use<RavenUnitOfWork>();
                                         });
         }
     }
