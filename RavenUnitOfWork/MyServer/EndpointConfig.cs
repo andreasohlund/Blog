@@ -19,28 +19,25 @@ namespace MyServer
         }
     }
 
-    public class SetupContainer:IWantCustomInitialization
+    public class SetupContainer : IWantCustomInitialization
     {
         public void Init()
         {
-            var store = new DocumentStore
-                            {
-                                Url = "http://localhost:8080"
-                            };
+            var store = new DocumentStore { Url = "http://localhost:8080" };
             store.Initialize();
 
-            ObjectFactory.Configure(c=>
-                                        {
-                                            c.For<IDocumentStore>()
-                                                .Singleton()
-                                                .Use(store);
+            ObjectFactory.Configure(c =>
+            {
+                c.For<IDocumentStore>()
+                    .Singleton()
+                    .Use(store);
 
-                                            c.For<IDocumentSession>()
-                                                .Use(ctx => ctx.GetInstance<IDocumentStore>().OpenSession());
+                c.For<IDocumentSession>()
+                    .Use(ctx => ctx.GetInstance<IDocumentStore>().OpenSession());
 
-                                            c.For<IManageUnitsOfWork>()
-                                                .Use<RavenUnitOfWork>();
-                                        });
+                c.For<IManageUnitsOfWork>()
+                    .Use<RavenUnitOfWork>();
+            });
         }
     }
 }
